@@ -36,8 +36,10 @@ while i < pageLimit:
             linkSoup = BeautifulSoup(linkContent, from_encoding=linkContent.info().getparam('charset'))
             for td in linkSoup.find_all('td'):
                 tdText = td.get_text()
+				# Print the address
                 if re.search("[A-Z][0-9][A-Z] [0-9][A-Z][0-9]", unicode(tdText)) is not None:
-                    print(tdText.encode('utf8', 'replace').split("\n")[0])   
+					if tdText.split("\n")[0].strip():
+						print(tdText.encode('utf8', 'replace').split("\n")[0])
     # Define the next page           
     i += 1
     nextPage = 'page-' + str(i)
