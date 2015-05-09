@@ -3,16 +3,29 @@
 
 import urllib2
 import re
+import sys
 from bs4 import BeautifulSoup
 
-baseURL = "http://www.kijiji.ca/b-garage-sale-yard-sale/ottawa/c638l1700185"
+# Parse arguments
+if len(sys.argv) > 1:
+	if sys.argv[1] is not None:
+		baseURL = sys.argv[1]
+else:
+	# Print usage if no arguments given
+	print("Usage: kijiji-mapper.py [Starting URL] [number of pages]\n" + "Example: kijiji-mapper.py \"http://www.kijiji.ca/b-garage-sale-yard-sale/ottawa/c638l1700185\" 5 \n" + "\n Since no URL specified, using default (Ottawa garage sales):\n")
+	baseURL = "http://www.kijiji.ca/b-garage-sale-yard-sale/ottawa/c638l1700185"
+if len(sys.argv) > 2:
+	if sys.argv[2] is not None:
+		pageLimit = int(sys.argv[2])
+else:
+	pageLimit = 15
 
 
 content = urllib2.urlopen(baseURL)
 soup = BeautifulSoup(content, from_encoding=content.info().getparam('charset'))
 i = 1
 
-while i < 15:
+while i < pageLimit:
     # Get all the addresses
     for link in soup.find_all('a'):
         linkURL = link.get('href')
