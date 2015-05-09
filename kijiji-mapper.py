@@ -16,7 +16,7 @@ while i < 15:
     # Get all the addresses
     for link in soup.find_all('a'):
         linkURL = link.get('href')
-        if (re.match("^/v-garage", str(linkURL)) is not None and re.match(".*topAdSearch$", str(linkURL)) is None):
+        if (re.match("^/v-", str(linkURL)) is not None and re.match(".*topAdSearch$", str(linkURL)) is None):
             newLinkURL = linkURL = 'http://www.kijiji.ca' + str(link.get('href'))
             linkContent = urllib2.urlopen(newLinkURL)
     #        print(newLinkURL)
